@@ -2,12 +2,17 @@
 
 internal static class Configuration
 {
-    public static string Token = 
-        Environment.GetEnvironmentVariable("BOT_TOKEN") ?? 
-        throw new ArgumentNullException("Env.BOT_TOKEN");
+    public static string Token { get; private set; } = "";
 
-    public static long AdminId = int.Parse(_adminId ?? "");
-    private readonly static string _adminId = 
-        Environment.GetEnvironmentVariable("ADMIN_ID") ??
-        throw new ArgumentNullException("Env.ADMIN_ID");
+    public static long AdminId { get; private set; }
+
+    public static void Load()
+    {
+        Token = Get("BOT_TOKEN");
+        AdminId = int.Parse(Get("ADMIN_ID"));
+    }
+
+    private static string Get(string variable) =>
+        Environment.GetEnvironmentVariable(variable) ??
+            throw new ArgumentNullException($"Env.{variable}");
 }

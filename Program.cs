@@ -17,6 +17,7 @@ namespace WireGram
         static void Main(string[] args)
         {
             InitLogger();
+            Configuration.Load();
         }
     }
 }
