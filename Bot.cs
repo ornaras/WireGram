@@ -1,8 +1,6 @@
 ﻿using Serilog;
 using Telegram.Bot;
-using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
-using Telegram.Bot.Types.Enums;
 
 namespace WireGram
 {
@@ -17,20 +15,17 @@ namespace WireGram
             Client = new TelegramBotClient(Configuration.Token, 
                 cancellationToken: CancelSource.Token);
             Client.DeleteWebhook().Wait();
-            Client.OnMessage += OnMessage;
-            Client.OnError += OnError;
+            Client.StartReceiving(UpdateHandler, ErrorHandler, null, CancelSource.Token);
+            Task.Delay(-1).Wait();
         }
 
-        private async Task OnMessage(Message msg, UpdateType type)
+        private static async Task UpdateHandler(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
         {
 
         }
 
-        private async Task OnError(Exception error, HandleErrorSource source)
+        private static async Task ErrorHandler(ITelegramBotClient botClient, Exception error, CancellationToken cancellationToken)
         {
-            if(source == HandleErrorSource.FatalError)
-                Log.Logger.Fatal(error, $"Произошла критическая ошибка в работе Telegram-бота");
-            else
                 Log.Logger.Error(error, $"Произошла ошибка в работе Telegram-бота");
         }
     }

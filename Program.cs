@@ -18,6 +18,7 @@ namespace WireGram
         {
             InitLogger();
             Configuration.Load();
+            var bot = new Bot();
         }
     }
 }
