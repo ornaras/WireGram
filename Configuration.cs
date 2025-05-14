@@ -12,7 +12,7 @@ internal static class Configuration
         AdminId = int.Parse(Get("ADMIN_ID"));
     }
 
-    private static string Get(string variable) =>
-        Environment.GetEnvironmentVariable(variable) ??
+    private static string Get(string variable, string? defaultValue = null) =>
+        Environment.GetEnvironmentVariable(variable) ?? defaultValue ??
             throw new ArgumentNullException($"Env.{variable}");
 }
