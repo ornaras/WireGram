@@ -8,7 +8,7 @@ namespace WireGram
         private readonly static List<Peer> _peers = [];
 
         static Peer()
-        {
+        {   
             if (!File.Exists(Constants.PeersPath)) return;
             using var fs = new StreamReader(Constants.PeersPath);
             using var csv = new CsvReader(fs, CultureInfo.InvariantCulture);
@@ -26,11 +26,16 @@ namespace WireGram
 
         public static void Add(Peer peer)
         {
+            _peers.Add(peer);
+            WriteToFile();
+        }
+
+        private static void WriteToFile()
+        {
             if (!File.Exists(Constants.PeersPath))
                 File.Create(Constants.PeersPath);
             using var fs = new StreamWriter(Constants.PeersPath);
             using var csv = new CsvWriter(fs, CultureInfo.InvariantCulture);
-            _peers.Add(peer);
             csv.WriteRecords(_peers);
         }
 
