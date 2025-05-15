@@ -1,15 +1,11 @@
-﻿using System.Globalization;
-using CsvHelper;
+﻿using CsvHelper;
+using System.Globalization;
 
-namespace WireGram.DataBase
+namespace WireGram
 {
-    internal class Peer
+    internal partial class Peer
     {
-        public string PublicKey { get; set; }
-        public long UserId { get; set; }
-        public DateOnly? Expaired { get; set; }
-
-        private static List<Peer> _peers;
+        private readonly static List<Peer> _peers = [];
 
         static Peer()
         {
@@ -19,13 +15,13 @@ namespace WireGram.DataBase
             _peers = [.. csv.GetRecords<Peer>()];
         }
 
-        public static Peer[] Get(long userId) => 
+        public static Peer[] Get(long userId) =>
             [.. _peers.Where(p => userId == p.UserId)];
 
         public static Peer[] Get(DateOnly expaired) =>
             [.. _peers.Where(p => expaired == p.Expaired)];
 
-        public static Peer? Get(string publicKey) => 
+        public static Peer? Get(string publicKey) =>
             _peers.FirstOrDefault(p => p.PublicKey == publicKey);
 
         public static void Add(Peer peer)
