@@ -10,7 +10,7 @@ namespace WireGram
             Log.Logger = new LoggerConfiguration()
                 .Enrich.WithProperty("Version", ver)
                 .WriteTo.Console(outputTemplate: Constants.LoggerFormat)
-                .WriteTo.File("/var/log/wiregram.log", outputTemplate: Constants.LoggerFormat)
+                .WriteTo.File(Constants.LogPath, outputTemplate: Constants.LoggerFormat)
                 .CreateLogger();
         }
 
