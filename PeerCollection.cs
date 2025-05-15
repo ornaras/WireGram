@@ -5,10 +5,10 @@ namespace WireGram
 {
     internal partial class Peer
     {
-        private readonly static List<Peer> _peers = [];
+        private static List<Peer> _peers = [];
 
-        static Peer()
-        {   
+        public static void Load()
+        {
             if (!File.Exists(Constants.PeersPath)) return;
             using var fs = new StreamReader(Constants.PeersPath);
             using var csv = new CsvReader(fs, CultureInfo.InvariantCulture);

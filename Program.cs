@@ -19,6 +19,7 @@ namespace WireGram
             CreateIfNotExistsDirectory(Path.GetDirectoryName(Constants.PeersPath)!);
             InitLogger();
             Configuration.Load();
+            Peer.Load();
             var bot = new Bot();
         }
     }
