@@ -1,6 +1,6 @@
 ﻿namespace WireGram
 {
-    internal partial class Peer
+    internal partial class Peer(string publicKey, long userId, DateOnly? expaired)
     {
         public string PublicKey
         {
@@ -36,8 +36,8 @@
             }
         }
 
-        private string _publicKey = "";
-        private long _userId = 0;
-        private DateOnly? _expaired = null;
+        private string _publicKey = publicKey;
+        private long _userId = userId;
+        private DateOnly? _expaired = expaired;
     }
 }
