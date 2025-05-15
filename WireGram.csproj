@@ -15,4 +15,10 @@
 	<PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
 	<PackageReference Include="Telegram.Bot" Version="22.5.1" />	
   </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="WireGram.Utils">
+      <Static>True</Static>
+    </Using>
+  </ItemGroup>
 </Project>
