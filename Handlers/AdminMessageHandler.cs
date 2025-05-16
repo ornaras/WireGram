@@ -1,4 +1,5 @@
-﻿using Telegram.Bot;
+﻿using System.Text;
+using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 
@@ -18,9 +19,19 @@ namespace WireGram
         {
             if (msg.Text == "/start")
                 return await SendAdminStart(msg.Chat.Id);
+            else if (msg.Text == "/system")
+                return await SendSystemInfo(msg.Chat.Id);
             return false;
         }
 
+        private static async Task<bool> SendSystemInfo(ChatId chatId)
+        {
+            var builder = new StringBuilder();
+            builder.AppendLine($"ОС: <b>{Environment.OSVersion}</b>");
+            builder.AppendLine($"Версия WireGram: <b>v{typeof(Program).Assembly.GetName().Version}</b>");
+            await Client.SendMessage(chatId, builder.ToString(), parseMode: ParseMode.Html);
+            return true;
+        }
         private static async Task<bool> SendAdminStart(ChatId chatId)
         {
             await Client.SendMessage(chatId, AdminStartMessage, parseMode: ParseMode.Html);
