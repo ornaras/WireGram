@@ -4,7 +4,7 @@ using Telegram.Bot.Types;
 
 namespace WireGram
 {
-    internal class Bot
+    internal partial class Bot
     {
         public static CancellationTokenSource CancelSource { get; private set; }
         public static TelegramBotClient Client { get; private set; }
@@ -21,7 +21,8 @@ namespace WireGram
 
         private static async Task UpdateHandler(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
         {
-
+            if(update.Message is Message msg) 
+                await OnMessage(msg);
         }
 
         private static async Task ErrorHandler(ITelegramBotClient botClient, Exception error, CancellationToken cancellationToken)
