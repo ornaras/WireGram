@@ -6,7 +6,8 @@ namespace WireGram
     {
         private static async Task OnMessage(Message msg)
         {
-
+            if (msg.From!.Id == Configuration.AdminId &&
+                await OnAdminMessage(msg)) return;
         }
     }
 }
