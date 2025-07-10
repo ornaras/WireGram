@@ -1,5 +1,6 @@
 ﻿using Telegram.Bot;
 using Telegram.Bot.Polling;
+using Telegram.Bot.Types.Enums;
 
 namespace WireGram.Telegram
 {
@@ -7,7 +8,11 @@ namespace WireGram.Telegram
     {
         public async Task ReceiveAsync(CancellationToken stoppingToken)
         {
-            var receiverOptions = new ReceiverOptions() { DropPendingUpdates = true, AllowedUpdates = [] };
+            var receiverOptions = new ReceiverOptions() 
+            { 
+                DropPendingUpdates = true, 
+                AllowedUpdates = [ UpdateType.Message ] 
+            };
 
             var me = await botClient.GetMe(stoppingToken);
             logger.LogInformation("Удалось подключиться к боту {BotName}", me.Username ?? "???");
