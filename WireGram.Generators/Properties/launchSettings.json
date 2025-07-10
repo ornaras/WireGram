@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "WireGram.Generators": {
+      "commandName": "DebugRoslynComponent",
+      "targetProject": "..\\WireGram\\WireGram.csproj"
+    }
+  }
+}
