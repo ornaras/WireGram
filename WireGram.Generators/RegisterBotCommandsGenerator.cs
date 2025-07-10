@@ -1,6 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
@@ -23,6 +22,7 @@ namespace WireGram.Generators
             var builder = new StringBuilder();
             builder.AppendLine("""
                                using WireGram.Telegram.Commands;
+                               using WireGram.Abstractions;
 
                                namespace WireGram.Telegram
                                {
@@ -36,10 +36,10 @@ namespace WireGram.Generators
                 if (symbol is not INamedTypeSymbol nts) continue;
                 if (!nts.Name.EndsWith("Command")) continue;
                 if (nts.Interfaces.Any(i => i.ToDisplayString() != "WireGram.Abstractions.IBotCommand")) continue;
-                builder.AppendLine($"            {{ \"{ToCommand(nts.Name)}\", new {nts.Name}() }}");
+                builder.AppendLine($"            {{ \"{ToCommand(nts.Name)}\", new {nts.Name}() }},");
             }
             builder.AppendLine("""
-                                       }
+                                       };
                                    }
                                }
                                """);
