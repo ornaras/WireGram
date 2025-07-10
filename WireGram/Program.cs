@@ -1,13 +1,20 @@
 using Serilog;
-using WireGram;
 
+namespace WireGram;
+
+public static class Program
+{
+    public static void Main(string[] args)
+    {
 var builder = Host.CreateApplicationBuilder(args);
+        builder.ConfigureSerilog();
+        var host = builder.Build();
+        host.Run();
+    }
 
+    public static void ConfigureSerilog(this HostApplicationBuilder builder) => 
 builder.Services.AddSerilog(conf => conf
     .WriteTo.File("/var/log/wiregram.log")
     .WriteTo.Console()
 );
-builder.Services.AddHostedService<Worker>();
-
-var host = builder.Build();
-host.Run();
+}
