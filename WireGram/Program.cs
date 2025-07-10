@@ -1,5 +1,6 @@
 using Quartz;
 using Serilog;
+using Serilog.Events;
 using Telegram.Bot;
 using WireGram.Telegram;
 
@@ -19,6 +20,8 @@ public static class Program
 
     public static void ConfigureSerilog(this HostApplicationBuilder builder) => 
         builder.Services.AddSerilog(conf => conf
+            .MinimumLevel.Override("Quartz", LogEventLevel.Warning)
+            .MinimumLevel.Override("Microsoft.Hosting.Lifetime", LogEventLevel.Warning)
             .WriteTo.File("/var/log/wiregram.log")
             .WriteTo.Console()
         );
