@@ -11,6 +11,7 @@ namespace WireGram
             ( 2, 66.5 ),
             ( 1, 70 ),
         ];
+        public static Price[] Prices => [.. _items.Reverse()];
 
         public static double Calculate(params int[] peers)
         {
