@@ -10,7 +10,7 @@ namespace WireGram.Telegram
             var receiverOptions = new ReceiverOptions() { DropPendingUpdates = true, AllowedUpdates = [] };
 
             var me = await botClient.GetMe(stoppingToken);
-            logger.LogInformation("Start receiving updates for {BotName}", me.Username ?? "My Awesome Bot");
+            logger.LogInformation("Удалось подключиться к боту {BotName}", me.Username ?? "???");
 
             await botClient.ReceiveAsync(updateHandler, receiverOptions, stoppingToken);
         }

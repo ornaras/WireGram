@@ -4,7 +4,7 @@
     {
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            logger.LogInformation("Starting polling service");
+            logger.LogInformation("Запуск длинного опроса {Service}", "Telegram Bot API");
             await DoWork(stoppingToken);
         }
 
@@ -21,7 +21,7 @@
                 }
                 catch (Exception ex)
                 {
-                    logger.LogError("Polling failed with exception: {Exception}", ex);
+                    logger.LogError(ex, "Во время опроса произошла ошибка: ");
                     await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
                 }
             }
