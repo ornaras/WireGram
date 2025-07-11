@@ -28,8 +28,10 @@ public static class Program
 
     public static void ConnectTelegramBot(this HostApplicationBuilder builder)
     {
+        var token = builder.Configuration["Telegram:Token"] ?? 
+            throw new ArgumentNullException(null, "Отсутствует токен Telegram-бота");
         builder.Services.AddSingleton<ITelegramBotClient>(sp =>
-            new TelegramBotClient(builder.Configuration["Telegram:Token"]!)
+            new TelegramBotClient(token)
         );
         builder.Services.AddScoped<UpdateHandler>();
         builder.Services.AddScoped<ReceiverService>();
