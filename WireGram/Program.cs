@@ -2,6 +2,7 @@ using Quartz;
 using Serilog;
 using Serilog.Events;
 using Telegram.Bot;
+using WireGram.Storage;
 using WireGram.Telegram;
 
 namespace WireGram;
@@ -14,6 +15,7 @@ internal static class Program
     {
         var builder = Host.CreateApplicationBuilder(args);
         builder.ConfigureSerilog();
+        builder.ConnectStorage();
         builder.ConfigureQuartz();
         builder.ConnectTelegramBot();
         HOST = builder.Build()!;
@@ -47,5 +49,10 @@ internal static class Program
         {
             o.WaitForJobsToComplete = true;
         });
+    }
+
+    public static void ConnectStorage(this HostApplicationBuilder builder)
+    {
+        builder.Services.AddDbContext<StorageContext>();
     }
 }
