@@ -2,6 +2,7 @@ using Quartz;
 using Serilog;
 using Serilog.Events;
 using Telegram.Bot;
+using WireGram.Abstractions;
 using WireGram.Storage;
 using WireGram.Telegram;
 
@@ -33,7 +34,7 @@ internal static class Program
     public static void ConnectTelegramBot(this HostApplicationBuilder builder)
     {
         var token = builder.Configuration["Telegram:Token"] ?? 
-            throw new ArgumentNullException(null, "РћС‚СЃСѓС‚СЃС‚РІСѓРµС‚ С‚РѕРєРµРЅ Telegram-Р±РѕС‚Р°");
+            throw new ArgumentNullException(null, "Отсутствует токен Telegram-бота");
         builder.Services.AddSingleton<ITelegramBotClient>(sp =>
             new TelegramBotClient(token)
         );
@@ -53,6 +54,8 @@ internal static class Program
 
     public static void ConnectStorage(this HostApplicationBuilder builder)
     {
+        builder.Services.AddSingleton<ICryptographyService>(_ =>
+            new SimpleCryptographyService(builder.Configuration["Storage:Salt"]));
         builder.Services.AddDbContext<StorageContext>();
     }
 }
