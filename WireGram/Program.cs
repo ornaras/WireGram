@@ -6,16 +6,18 @@ using WireGram.Telegram;
 
 namespace WireGram;
 
-public static class Program
+internal static class Program
 {
+    public static IHost HOST { get; private set; }
+
     public static void Main(string[] args)
     {
         var builder = Host.CreateApplicationBuilder(args);
         builder.ConfigureSerilog();
         builder.ConfigureQuartz();
         builder.ConnectTelegramBot();
-        var host = builder.Build();
-        host.Run();
+        HOST = builder.Build()!;
+        HOST.Run();
     }
 
     public static void ConfigureSerilog(this HostApplicationBuilder builder) => 
